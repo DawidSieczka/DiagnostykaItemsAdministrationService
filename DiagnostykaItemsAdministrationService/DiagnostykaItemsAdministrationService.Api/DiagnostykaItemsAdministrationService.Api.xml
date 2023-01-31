@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>DiagnostykaItemsAdministrationService.Api</name>
+    </assembly>
+    <members>
+        <member name="M:DiagnostykaItemsAdministrationService.Api.Controllers.ItemsController.GetItemByIdAsync(System.Int32)">
+            <summary>
+            Check
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+            <exception cref="T:System.NotImplementedException"></exception>
+        </member>
+    </members>
+</doc>
