@@ -12,5 +12,12 @@
             <returns></returns>
             <exception cref="T:System.NotImplementedException"></exception>
         </member>
+        <member name="M:DiagnostykaItemsAdministrationService.Api.Controllers.ItemsController.CreateItemAsync(DiagnostykaItemsAdministrationService.Application.Operations.Items.Commands.CreateItem.CreateItemCommand)">
+             <summary>
+            
+             </summary>
+             <param name="createItemCommand"></param>
+             <returns></returns>
+        </member>
     </members>
 </doc>

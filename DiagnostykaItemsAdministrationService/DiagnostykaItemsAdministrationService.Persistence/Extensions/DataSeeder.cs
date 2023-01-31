@@ -14,10 +14,9 @@ public static class DataSeeder
     {
         if (dbContext?.Colors.Any() is false)
         {
-
             dbContext.AddRange(new List<Color>()
             {
-                new Color 
+                new Color
                 {
                     Name = "Red"
                 },

@@ -17,11 +17,11 @@ public class AppDbContext : DbContext
 		{
 			eb.HasOne(i => i.Color)
 				.WithMany(c => c.Items)
-				.HasForeignKey(i => i.ColorId);
+				.HasForeignKey(i => i.ColorId)
+				.OnDelete(DeleteBehavior.SetNull);
 
 			eb.Property(i => i.Name).HasMaxLength(ItemRules.NameMaxLength);
 			eb.Property(i => i.Code).HasMaxLength(12).IsFixedLength();
-			
 		});
 			
 		base.OnModelCreating(modelBuilder);
