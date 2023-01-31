@@ -13,20 +13,20 @@ public class UpdateItemCommand : IRequest
 
 public class UpdateItemCommandHandler : IRequestHandler<UpdateItemCommand>
 {
-    private readonly AppDbContext _appDbContext;
+    private readonly AppDbContext _dbContext;
 
-    public UpdateItemCommandHandler(AppDbContext appDbContext)
+    public UpdateItemCommandHandler(AppDbContext dbContext)
     {
-        _appDbContext = appDbContext;
+        _dbContext = dbContext;
     }
 
     public async Task<Unit> Handle(UpdateItemCommand request, CancellationToken cancellationToken)
     {
-        var itemEntity = await _appDbContext.Items.FirstOrDefaultAsync(x => x.Id == request.Id, cancellationToken);
+        var itemEntity = await _dbContext.Items.FirstOrDefaultAsync(x => x.Id == request.Id, cancellationToken);
         if (itemEntity is null)
             throw new Exception($"Item of Id: {request.Id} can not be found and removed.");
 
-        var colorEntity = await _appDbContext.Colors.FirstOrDefaultAsync(x => x.Id == request.ColorId, cancellationToken);
+        var colorEntity = await _dbContext.Colors.FirstOrDefaultAsync(x => x.Id == request.ColorId, cancellationToken);
         if (colorEntity is null)
             throw new Exception($"Color of Id {request.ColorId} not found");
 
@@ -34,7 +34,7 @@ public class UpdateItemCommandHandler : IRequestHandler<UpdateItemCommand>
         itemEntity.Name = request.Name;
         itemEntity.ColorId = request.ColorId;
 
-        await _appDbContext.SaveChangesAsync(cancellationToken);
+        await _dbContext.SaveChangesAsync(cancellationToken);
 
         return Unit.Value;
     }

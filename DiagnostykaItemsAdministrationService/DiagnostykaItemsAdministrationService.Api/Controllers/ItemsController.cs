@@ -1,6 +1,7 @@
 ﻿using DiagnostykaItemsAdministrationService.Application.Operations.Items.Commands.CreateItem;
 using DiagnostykaItemsAdministrationService.Application.Operations.Items.Commands.DeleteItem;
 using DiagnostykaItemsAdministrationService.Application.Operations.Items.Commands.UpdateItem;
+using DiagnostykaItemsAdministrationService.Application.Operations.Items.Queries.GetItemById;
 using Microsoft.AspNetCore.Mvc;
 
 namespace DiagnostykaItemsAdministrationService.Api.Controllers;
@@ -16,10 +17,11 @@ public class ItemsController : ApiBase
     /// <param name="id">Id of type int.</param>
     /// <returns>item model.</returns>
     /// <exception cref="NotImplementedException"></exception>
-    [HttpGet]
-    public async Task GetItemByIdAsync(int id)
+    [HttpGet("{id}")]
+    public async Task<IActionResult> GetItemByIdAsync(int id)
     {
-        throw new NotImplementedException();
+        var itemDto = await Sender.Send(new GetItemByIdQuery() { Id = id });
+        return Ok(itemDto);
     }
 
     /// <summary>

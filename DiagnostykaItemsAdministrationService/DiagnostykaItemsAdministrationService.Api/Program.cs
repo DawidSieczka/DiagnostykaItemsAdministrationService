@@ -1,7 +1,7 @@
 using DiagnostykaItemsAdministrationService.Application.Common.Helpers;
 using DiagnostykaItemsAdministrationService.Application.Common.Helpers.Interfaces;
 using DiagnostykaItemsAdministrationService.Application.Operations.Items.Commands.CreateItem;
-using DiagnostykaItemsAdministrationService.Application.Operations.Items.Queries.GetItem;
+using DiagnostykaItemsAdministrationService.Application.Operations.Items.Queries.GetItemById;
 using DiagnostykaItemsAdministrationService.Persistence;
 using DiagnostykaItemsAdministrationService.Persistence.Extensions;
 using FluentValidation;
@@ -17,7 +17,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddTransient<IHashGenerator, HashGenerator>();
-builder.Services.AddMediatR(typeof(GetItemQuery));
+builder.Services.AddMediatR(typeof(GetItemByIdQuery));
 
 builder.Services.AddDbContext<AppDbContext>(dbBuilder =>
     dbBuilder
@@ -42,6 +42,8 @@ builder.Services.AddSwaggerGen(options =>
         });
 
 builder.Services.AddControllers().AddFluentValidation(fv => fv.RegisterValidatorsFromAssemblyContaining<CreateItemCommandValidator>());
+
+builder.Services.AddRouting(options => options.LowercaseUrls = true);
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();

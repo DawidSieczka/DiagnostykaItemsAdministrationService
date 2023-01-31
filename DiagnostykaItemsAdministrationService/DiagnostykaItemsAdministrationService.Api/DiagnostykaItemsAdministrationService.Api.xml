@@ -4,20 +4,54 @@
         <name>DiagnostykaItemsAdministrationService.Api</name>
     </assembly>
     <members>
+        <member name="T:DiagnostykaItemsAdministrationService.Api.Controllers.ApiBase">
+            <summary>
+            Base Api controller implementation
+            </summary>
+        </member>
+        <member name="F:DiagnostykaItemsAdministrationService.Api.Controllers.ApiBase._sender">
+            <summary>
+            Ecanpsulation for ISender.
+            </summary>
+        </member>
+        <member name="P:DiagnostykaItemsAdministrationService.Api.Controllers.ApiBase.Sender">
+            <summary>
+            ISender from MediatR object.
+            </summary>
+        </member>
+        <member name="T:DiagnostykaItemsAdministrationService.Api.Controllers.ItemsController">
+            <summary>
+            Controller for items.
+            </summary>
+        </member>
         <member name="M:DiagnostykaItemsAdministrationService.Api.Controllers.ItemsController.GetItemByIdAsync(System.Int32)">
             <summary>
-            Check
+            Gets a specific item by id.
             </summary>
-            <param name="id"></param>
-            <returns></returns>
+            <param name="id">Id of type int.</param>
+            <returns>item model.</returns>
             <exception cref="T:System.NotImplementedException"></exception>
         </member>
         <member name="M:DiagnostykaItemsAdministrationService.Api.Controllers.ItemsController.CreateItemAsync(DiagnostykaItemsAdministrationService.Application.Operations.Items.Commands.CreateItem.CreateItemCommand)">
-             <summary>
-            
-             </summary>
-             <param name="createItemCommand"></param>
-             <returns></returns>
+            <summary>
+            Creates item.
+            </summary>
+            <param name="createItemCommand">Item model.</param>
+            <returns>Id of type int.</returns>
+        </member>
+        <member name="M:DiagnostykaItemsAdministrationService.Api.Controllers.ItemsController.UpdateItemAsync(DiagnostykaItemsAdministrationService.Application.Operations.Items.Commands.UpdateItem.UpdateItemCommand)">
+            <summary>
+            Updates item.
+            </summary>
+            <param name="updateItemCommand">Item model.</param>
+            <returns>no Content.</returns>
+        </member>
+        <member name="M:DiagnostykaItemsAdministrationService.Api.Controllers.ItemsController.DeleteItemByIdAsync(System.Int32)">
+            <summary>
+            Deletes item.
+            </summary>
+            <param name="id">Item Id of type int.</param>
+            <returns>no content.</returns>
         </member>
     </members>
 </doc>
