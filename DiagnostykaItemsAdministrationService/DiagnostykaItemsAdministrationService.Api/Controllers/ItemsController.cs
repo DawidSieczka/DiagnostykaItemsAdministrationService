@@ -1,4 +1,5 @@
-﻿using MediatR;
+﻿using DiagnostykaItemsAdministrationService.Application.Operations.Items.Commands.CreateItem;
+using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
 namespace DiagnostykaItemsAdministrationService.Api.Controllers;
@@ -16,5 +17,12 @@ public class ItemsController : ApiBase
     public async Task GetItemByIdAsync(int id)
     {
         throw new NotImplementedException();
+    }
+
+    [HttpPost]
+    public async Task<IActionResult> CreateItemAsync(CreateItemCommand createItemCommand)
+    {
+        var id = await Sender.Send(createItemCommand);
+        return Ok(id);
     }
 }

@@ -7,11 +7,17 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Operations\Items\Commands\" />
+    <Folder Include="Operations\Items\Commands\DeleteItem\" />
+    <Folder Include="Operations\Items\Commands\UpdateItem\" />
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="FluentValidation" Version="11.0.0" />
     <PackageReference Include="MediatR" Version="11.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\DiagnostykaItemsAdministrationService.Persistence\DiagnostykaItemsAdministrationService.Persistence.csproj" />
   </ItemGroup>
 
 </Project>

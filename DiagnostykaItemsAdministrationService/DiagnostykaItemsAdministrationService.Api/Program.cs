@@ -1,14 +1,22 @@
+using DiagnostykaItemsAdministrationService.Application.Common.Helpers;
+using DiagnostykaItemsAdministrationService.Application.Common.Helpers.Interfaces;
+using DiagnostykaItemsAdministrationService.Application.Operations.Items.Commands.CreateItem;
 using DiagnostykaItemsAdministrationService.Application.Operations.Items.Queries.GetItem;
 using DiagnostykaItemsAdministrationService.Persistence;
+using DiagnostykaItemsAdministrationService.Persistence.Extensions;
+using FluentValidation;
+using FluentValidation.AspNetCore;
 using MediatR;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 using System.Reflection;
+using System.Security.Cryptography;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-
+builder.Services.AddTransient<IHashGenerator, HashGenerator>();
 builder.Services.AddMediatR(typeof(GetItemQuery));
 
 builder.Services.AddDbContext<AppDbContext>(dbBuilder =>
@@ -18,6 +26,7 @@ builder.Services.AddDbContext<AppDbContext>(dbBuilder =>
 
 using var appDbContext = builder.Services.BuildServiceProvider().GetRequiredService<AppDbContext>();
 appDbContext.Database.Migrate();
+
 
 builder.Services.AddSwaggerGen(options =>
         {
@@ -32,7 +41,8 @@ builder.Services.AddSwaggerGen(options =>
             options.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, xmlFilename));
         });
 
-builder.Services.AddControllers();
+builder.Services.AddControllers().AddFluentValidation(fv => fv.RegisterValidatorsFromAssemblyContaining<CreateItemCommandValidator>());
+
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
@@ -44,6 +54,10 @@ if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
+
+    using var serviceScope = app.Services.GetRequiredService<IServiceScopeFactory>().CreateScope();
+    using var context = serviceScope.ServiceProvider.GetService<AppDbContext>();
+    context?.Seed();
 }
 
 app.UseHttpsRedirection();
