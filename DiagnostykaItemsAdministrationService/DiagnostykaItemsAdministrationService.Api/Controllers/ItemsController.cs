@@ -1,8 +1,11 @@
-﻿using DiagnostykaItemsAdministrationService.Application.Operations.Items.Commands.CreateItem;
+﻿using DiagnostykaItemsAdministrationService.Application.Common.Exceptions;
+using DiagnostykaItemsAdministrationService.Application.Operations.Items.Commands.CreateItem;
 using DiagnostykaItemsAdministrationService.Application.Operations.Items.Commands.DeleteItem;
 using DiagnostykaItemsAdministrationService.Application.Operations.Items.Commands.UpdateItem;
 using DiagnostykaItemsAdministrationService.Application.Operations.Items.Queries.GetItemById;
+using DiagnostykaItemsAdministrationService.Application.Operations.Items.Queries.Models;
 using Microsoft.AspNetCore.Mvc;
+using Swashbuckle.AspNetCore.Annotations;
 
 namespace DiagnostykaItemsAdministrationService.Api.Controllers;
 
@@ -17,6 +20,8 @@ public class ItemsController : ApiBase
     /// <param name="id">Id of type int.</param>
     /// <returns>item model.</returns>
     /// <exception cref="NotImplementedException"></exception>
+    [SwaggerResponse(StatusCodes.Status200OK, "Returns item model.", typeof(ItemDto))]
+    [SwaggerResponse(StatusCodes.Status404NotFound, "Item has not been found", typeof(BaseExceptionModel))]
     [HttpGet("{id}")]
     public async Task<IActionResult> GetItemByIdAsync(int id)
     {
@@ -29,6 +34,8 @@ public class ItemsController : ApiBase
     /// </summary>
     /// <param name="createItemCommand">Item model.</param>
     /// <returns>Id of type int.</returns>
+    [SwaggerResponse(StatusCodes.Status200OK, "Returns new created item's id.", typeof(int))]
+    [SwaggerResponse(StatusCodes.Status404NotFound, "Color has not been found", typeof(BaseExceptionModel))]
     [HttpPost]
     public async Task<IActionResult> CreateItemAsync(CreateItemCommand createItemCommand)
     {
@@ -41,6 +48,8 @@ public class ItemsController : ApiBase
     /// </summary>
     /// <param name="updateItemCommand">Item model.</param>
     /// <returns>no Content.</returns>
+    [SwaggerResponse(StatusCodes.Status204NoContent, "Item updated. Returns No Content.")]
+    [SwaggerResponse(StatusCodes.Status404NotFound, "Item or Color has not been found", typeof(BaseExceptionModel))]
     [HttpPut]
     public async Task<ActionResult> UpdateItemAsync(UpdateItemCommand updateItemCommand)
     {
@@ -53,6 +62,8 @@ public class ItemsController : ApiBase
     /// </summary>
     /// <param name="id">Item Id of type int.</param>
     /// <returns>no content.</returns>
+    [SwaggerResponse(StatusCodes.Status204NoContent, "Item deleted. Returns No Content.")]
+    [SwaggerResponse(StatusCodes.Status404NotFound, "Item has not been found", typeof(BaseExceptionModel))]
     [HttpDelete("{id}")]
     public async Task<ActionResult> DeleteItemByIdAsync(int id)
     {

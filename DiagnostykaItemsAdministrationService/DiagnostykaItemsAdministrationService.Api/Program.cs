@@ -13,6 +13,7 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
+using Swashbuckle.AspNetCore.Filters;
 using System.Reflection;
 using System.Security.Cryptography;
 
@@ -33,6 +34,8 @@ appDbContext.Database.Migrate();
 
 builder.Services.AddSwaggerGen(options =>
         {
+            options.EnableAnnotations();
+
             options.SwaggerDoc("v1", new OpenApiInfo
             {
                 Version = "v1",
@@ -42,7 +45,11 @@ builder.Services.AddSwaggerGen(options =>
 
             var xmlFilename = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
             options.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, xmlFilename));
+            options.ExampleFilters();
+            options.OperationFilter<AddResponseHeadersFilter>();
+
         });
+builder.Services.AddSwaggerExamples();
 
 builder.Services.AddControllers(options =>
         options.Filters.Add(new HttpResponseExceptionFilter(builder.Environment))
