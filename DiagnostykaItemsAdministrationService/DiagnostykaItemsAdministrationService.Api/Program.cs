@@ -1,3 +1,5 @@
+using DiagnostykaItemsAdministrationService.Application.Common.Exceptions;
+using DiagnostykaItemsAdministrationService.Application.Common.Exceptions.Filters;
 using DiagnostykaItemsAdministrationService.Application.Common.Helpers;
 using DiagnostykaItemsAdministrationService.Application.Common.Helpers.Interfaces;
 using DiagnostykaItemsAdministrationService.Application.Operations.Items.Commands.CreateItem;
@@ -8,6 +10,7 @@ using FluentValidation;
 using FluentValidation.AspNetCore;
 using MediatR;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 using System.Reflection;
@@ -41,7 +44,9 @@ builder.Services.AddSwaggerGen(options =>
             options.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, xmlFilename));
         });
 
-builder.Services.AddControllers().AddFluentValidation(fv => fv.RegisterValidatorsFromAssemblyContaining<CreateItemCommandValidator>());
+builder.Services.AddControllers(options =>
+        options.Filters.Add(new HttpResponseExceptionFilter(builder.Environment))
+    ).AddFluentValidation(fv => fv.RegisterValidatorsFromAssemblyContaining<CreateItemCommandValidator>());
 
 builder.Services.AddRouting(options => options.LowercaseUrls = true);
 
@@ -51,6 +56,28 @@ builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
 
+app.UseExceptionHandler(e =>
+{
+    e.Run(async context =>
+    {
+        var contextFeature = context.Features.Get<IExceptionHandlerFeature>();
+        if (contextFeature is not null)
+        {
+            var exception = contextFeature.Error;
+            if (exception is not CustomException)
+            {
+                context.Response.StatusCode = StatusCodes.Status500InternalServerError;
+                context.Response.ContentType = "application/json";
+
+                var responseBody = app.Environment.IsDevelopment() ?
+                                      new BaseExceptionModel(context.Response.StatusCode, exception.Message, exception.StackTrace, exception.InnerException?.Message) :
+                                      new BaseExceptionModel(context.Response.StatusCode, "Server error");
+
+                await context.Response.WriteAsJsonAsync(responseBody);
+            }
+        }
+    });
+});
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {

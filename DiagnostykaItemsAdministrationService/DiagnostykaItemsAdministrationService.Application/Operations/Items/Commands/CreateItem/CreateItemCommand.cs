@@ -1,4 +1,5 @@
-﻿using DiagnostykaItemsAdministrationService.Application.Common.Helpers.Interfaces;
+﻿using DiagnostykaItemsAdministrationService.Application.Common.Exceptions;
+using DiagnostykaItemsAdministrationService.Application.Common.Helpers.Interfaces;
 using DiagnostykaItemsAdministrationService.Persistence;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
@@ -29,7 +30,7 @@ public class CreateItemCommandHandler : IRequestHandler<CreateItemCommand, int>
     {
         var colorEntity = await _dbContext.Colors.FirstOrDefaultAsync(x => x.Id == request.ColorId);
         if (colorEntity is null)
-            throw new Exception($"Color of Id {request.ColorId} not found");
+            throw new NotFoundException($"Color of Id {request.ColorId} not found");
 
         var entityEntry = await _dbContext.Items.AddAsync(new Domain.Entities.Item()
         {

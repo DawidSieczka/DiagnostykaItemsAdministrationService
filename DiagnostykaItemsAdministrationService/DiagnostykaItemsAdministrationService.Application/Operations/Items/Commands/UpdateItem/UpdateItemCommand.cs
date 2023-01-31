@@ -1,4 +1,5 @@
-﻿using DiagnostykaItemsAdministrationService.Persistence;
+﻿using DiagnostykaItemsAdministrationService.Application.Common.Exceptions;
+using DiagnostykaItemsAdministrationService.Persistence;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
@@ -24,11 +25,11 @@ public class UpdateItemCommandHandler : IRequestHandler<UpdateItemCommand>
     {
         var itemEntity = await _dbContext.Items.FirstOrDefaultAsync(x => x.Id == request.Id, cancellationToken);
         if (itemEntity is null)
-            throw new Exception($"Item of Id: {request.Id} can not be found and removed.");
+            throw new NotFoundException($"Item of Id: {request.Id} not found.");
 
         var colorEntity = await _dbContext.Colors.FirstOrDefaultAsync(x => x.Id == request.ColorId, cancellationToken);
         if (colorEntity is null)
-            throw new Exception($"Color of Id {request.ColorId} not found");
+            throw new NotFoundException($"Color of Id {request.ColorId} not found");
 
         itemEntity.Id = request.Id;
         itemEntity.Name = request.Name;

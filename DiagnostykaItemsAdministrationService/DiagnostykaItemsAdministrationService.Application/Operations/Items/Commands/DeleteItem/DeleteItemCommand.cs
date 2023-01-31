@@ -1,4 +1,5 @@
-﻿using DiagnostykaItemsAdministrationService.Persistence;
+﻿using DiagnostykaItemsAdministrationService.Application.Common.Exceptions;
+using DiagnostykaItemsAdministrationService.Persistence;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
@@ -22,7 +23,7 @@ public class DeleteItemCommandHandler : IRequestHandler<DeleteItemCommand>
     {
         var itemEntity = await _dbContext.Items.FirstOrDefaultAsync(x => x.Id == request.Id, cancellationToken);
         if (itemEntity is null)
-            throw new Exception($"Item of Id: {request.Id} can not be found and removed.");
+            throw new NotFoundException($"Item of Id: {request.Id} can not be found and removed.");
 
         _dbContext.Items.Remove(itemEntity);
 
