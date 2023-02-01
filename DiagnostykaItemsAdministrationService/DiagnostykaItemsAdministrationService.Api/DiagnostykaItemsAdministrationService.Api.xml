@@ -39,6 +39,13 @@
             </summary>
             <returns>List of colors.</returns>
         </member>
+        <member name="M:DiagnostykaItemsAdministrationService.Api.Controllers.ColorsController.GetColorByIdAsync(System.Int32)">
+            <summary>
+            Get a specific color by id.
+            </summary>
+            <param name="id">Color's id type of int.</param>
+            <returns>Color model.</returns>
+        </member>
         <member name="M:DiagnostykaItemsAdministrationService.Api.Controllers.ColorsController.CreateColorAsync(DiagnostykaItemsAdministrationService.Application.Operations.Colors.Commands.CreateColor.CreateColorCommand)">
             <summary>
             Creates color.
@@ -64,6 +71,14 @@
             <summary>
             Controller for items.
             </summary>
+        </member>
+        <member name="M:DiagnostykaItemsAdministrationService.Api.Controllers.ItemsController.GetPaginatedItemsAsync(System.Int32,System.Int32)">
+            <summary>
+            Gets paginated items.
+            </summary>
+            <param name="currentPage">Current page number.</param>
+            <param name="pageSize">Items amount in page.</param>
+            <returns>Paginated items.</returns>
         </member>
         <member name="M:DiagnostykaItemsAdministrationService.Api.Controllers.ItemsController.GetItemByIdAsync(System.Int32)">
             <summary>

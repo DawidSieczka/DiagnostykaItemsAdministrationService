@@ -1,8 +1,10 @@
 ﻿using DiagnostykaItemsAdministrationService.Application.Common.Exceptions;
+using DiagnostykaItemsAdministrationService.Application.Common.Helpers;
 using DiagnostykaItemsAdministrationService.Application.Operations.Items.Commands.CreateItem;
 using DiagnostykaItemsAdministrationService.Application.Operations.Items.Commands.DeleteItem;
 using DiagnostykaItemsAdministrationService.Application.Operations.Items.Commands.UpdateItem;
 using DiagnostykaItemsAdministrationService.Application.Operations.Items.Queries.GetItemById;
+using DiagnostykaItemsAdministrationService.Application.Operations.Items.Queries.GetPaginatedItemsById;
 using DiagnostykaItemsAdministrationService.Application.Operations.Items.Queries.Models;
 using Microsoft.AspNetCore.Mvc;
 using Swashbuckle.AspNetCore.Annotations;
@@ -14,6 +16,25 @@ namespace DiagnostykaItemsAdministrationService.Api.Controllers;
 /// </summary>
 public class ItemsController : ApiBase
 {
+    /// <summary>
+    /// Gets paginated items.
+    /// </summary>
+    /// <param name="currentPage">Current page number.</param>
+    /// <param name="pageSize">Items amount in page.</param>
+    /// <returns>Paginated items.</returns>
+    [SwaggerResponse(StatusCodes.Status200OK, "Returns paginated items.", typeof(PagedModel<ItemDto>))]
+    [HttpGet]
+    public async Task<IActionResult> GetPaginatedItemsAsync(int currentPage = 1, int pageSize = 10)
+    {
+        var paginatedItems = await Sender.Send(new GetPaginatedItemsByIdQuery()
+        {
+            Page = currentPage,
+            PageSize = pageSize
+        });
+
+        return Ok(paginatedItems);
+    }
+
     /// <summary>
     /// Gets a specific item by id.
     /// </summary>
