@@ -19,6 +19,47 @@
             ISender from MediatR object.
             </summary>
         </member>
+        <member name="M:DiagnostykaItemsAdministrationService.Api.Controllers.ApiBase.GetCreatedRoute``1(System.String,``0)">
+            <summary>
+            Gets created route.
+            </summary>
+            <typeparam name="T">type of Id. e.g int or guid.</typeparam>
+            <param name="controller">name of controller.</param>
+            <param name="id">id value.</param>
+            <returns>Route path.</returns>
+        </member>
+        <member name="T:DiagnostykaItemsAdministrationService.Api.Controllers.ColorsController">
+            <summary>
+            Endpoint for colors
+            </summary>
+        </member>
+        <member name="M:DiagnostykaItemsAdministrationService.Api.Controllers.ColorsController.GetAllColorsAsync">
+            <summary>
+            Gets all Colors.
+            </summary>
+            <returns>List of colors.</returns>
+        </member>
+        <member name="M:DiagnostykaItemsAdministrationService.Api.Controllers.ColorsController.CreateColorAsync(DiagnostykaItemsAdministrationService.Application.Operations.Colors.Commands.CreateColor.CreateColorCommand)">
+            <summary>
+            Creates color.
+            </summary>
+            <param name="createColorCommand">Color's model.</param>
+            <returns>color id of type int.</returns>
+        </member>
+        <member name="M:DiagnostykaItemsAdministrationService.Api.Controllers.ColorsController.DeleteColorAsync(System.Int32)">
+            <summary>
+            Deletes a specific color.
+            </summary>
+            <param name="id">Color Id of type int.</param>
+            <returns>No content.</returns>
+        </member>
+        <member name="M:DiagnostykaItemsAdministrationService.Api.Controllers.ColorsController.UpdateColorAsync(DiagnostykaItemsAdministrationService.Application.Operations.Colors.Commands.UpdateColor.UpdateColorCommand)">
+            <summary>
+            Updates a specific color.
+            </summary>
+            <param name="updateColorCommand">Color's model.</param>
+            <returns>No content.</returns>
+        </member>
         <member name="T:DiagnostykaItemsAdministrationService.Api.Controllers.ItemsController">
             <summary>
             Controller for items.

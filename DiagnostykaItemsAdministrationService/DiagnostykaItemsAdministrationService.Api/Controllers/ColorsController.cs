@@ -3,6 +3,7 @@ using DiagnostykaItemsAdministrationService.Application.Operations.Colors.Comman
 using DiagnostykaItemsAdministrationService.Application.Operations.Colors.Commands.DeleteColor;
 using DiagnostykaItemsAdministrationService.Application.Operations.Colors.Commands.UpdateColor;
 using DiagnostykaItemsAdministrationService.Application.Operations.Colors.Queries.GetAllColors;
+using DiagnostykaItemsAdministrationService.Application.Operations.Colors.Queries.GetColorById;
 using DiagnostykaItemsAdministrationService.Application.Operations.Items.Queries.Models;
 using Microsoft.AspNetCore.Mvc;
 using Swashbuckle.AspNetCore.Annotations;
@@ -27,6 +28,21 @@ public class ColorsController : ApiBase
 
         return Ok(allColors);
     }
+
+    /// <summary>
+    /// Get a specific color by id.
+    /// </summary>
+    /// <param name="id">Color's id type of int.</param>
+    /// <returns>Color model.</returns>
+    [SwaggerResponse(StatusCodes.Status200OK, "Returns color.", typeof(ColorDto))]
+    [SwaggerResponse(StatusCodes.Status404NotFound, "Color has not been found", typeof(BaseExceptionModel))]
+    [HttpGet("{id}")]
+    public async Task<IActionResult> GetColorByIdAsync(int id)
+    {
+        var color = await Sender.Send(new GetColorByIdQuery() { Id = id });
+        return Ok(color);
+    }
+
 
     /// <summary>
     /// Creates color.
