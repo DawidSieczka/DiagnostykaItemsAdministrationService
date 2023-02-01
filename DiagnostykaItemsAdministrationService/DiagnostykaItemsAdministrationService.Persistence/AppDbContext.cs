@@ -23,7 +23,12 @@ public class AppDbContext : DbContext
 			eb.Property(i => i.Name).HasMaxLength(ItemRules.NameMaxLength);
 			eb.Property(i => i.Code).HasMaxLength(12).IsFixedLength();
 		});
-			
+
+		modelBuilder.Entity<Color>(eb =>
+		{
+			eb.Property(i => i.Name).HasMaxLength(ColorRules.NameMaxLength).IsRequired();
+		});
+
 		base.OnModelCreating(modelBuilder);
 	}
 }
