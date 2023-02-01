@@ -34,13 +34,13 @@ public class ItemsController : ApiBase
     /// </summary>
     /// <param name="createItemCommand">Item model.</param>
     /// <returns>Id of type int.</returns>
-    [SwaggerResponse(StatusCodes.Status200OK, "Returns new created item's id.", typeof(int))]
+    [SwaggerResponse(StatusCodes.Status201Created, "Returns new created item's id with route.", typeof(int))]
     [SwaggerResponse(StatusCodes.Status404NotFound, "Color has not been found", typeof(BaseExceptionModel))]
     [HttpPost]
     public async Task<IActionResult> CreateItemAsync(CreateItemCommand createItemCommand)
     {
-        var id = await Sender.Send(createItemCommand);
-        return Ok(id);
+        var itemId = await Sender.Send(createItemCommand);
+        return Created(GetCreatedRoute(nameof(ItemsController), itemId), itemId);
     }
 
     /// <summary>

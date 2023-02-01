@@ -33,12 +33,12 @@ public class ColorsController : ApiBase
     /// </summary>
     /// <param name="createColorCommand">Color's model.</param>
     /// <returns>color id of type int.</returns>
-    [SwaggerResponse(StatusCodes.Status200OK, "Returns created color id.", typeof(int))]
+    [SwaggerResponse(StatusCodes.Status201Created, "Returns created color id with route.", typeof(int))]
     [HttpPost]
     public async Task<IActionResult> CreateColorAsync(CreateColorCommand createColorCommand)
     {
         var colorId = await Sender.Send(createColorCommand);
-        return Ok(colorId);
+        return Created(GetCreatedRoute(nameof(ColorsController),colorId), colorId);
     }
 
     /// <summary>
