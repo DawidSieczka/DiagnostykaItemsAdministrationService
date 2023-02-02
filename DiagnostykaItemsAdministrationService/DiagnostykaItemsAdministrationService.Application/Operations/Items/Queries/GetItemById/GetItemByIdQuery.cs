@@ -31,11 +31,11 @@ public class GetItemByIdQueryHandler : IRequestHandler<GetItemByIdQuery, ItemDto
             Id = itemEntity.Id,
             Name =  itemEntity.Name,
             Code = itemEntity.Code,
-            Color = new ColorDto()
+            Color = (itemEntity.Color != null) ? new ColorDto()
             {
-                Id = itemEntity.Id,
-                Name = itemEntity.Name
-            }
+                Id = itemEntity.Color.Id,
+                Name = itemEntity.Color.Name
+            } : null,
         };
     }
 }

@@ -26,7 +26,7 @@ public class ItemsController : ApiBase
     [HttpGet]
     public async Task<IActionResult> GetPaginatedItemsAsync(int currentPage = 1, int pageSize = 10)
     {
-        var paginatedItems = await Sender.Send(new GetPaginatedItemsByIdQuery()
+        var paginatedItems = await Sender.Send(new GetPaginatedItemsQuery()
         {
             Page = currentPage,
             PageSize = pageSize

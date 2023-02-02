@@ -58,7 +58,7 @@ public class TestsStartup
 
     public static async Task ResetState()
     {
-        await _checkpoint.Reset(_configuration.GetConnectionString("SqlDatabase"));
+        await _checkpoint.Reset(_configuration.GetConnectionString("SqlServer"));
     }
 
     public static AppDbContext GetDbContext() => _scopeFactory.CreateAsyncScope().ServiceProvider.GetRequiredService<AppDbContext>();

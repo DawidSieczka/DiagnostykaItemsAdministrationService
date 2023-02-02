@@ -3,31 +3,27 @@ using DiagnostykaItemsAdministrationService.Application.Operations.Items.Queries
 using DiagnostykaItemsAdministrationService.Persistence;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Globalization;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace DiagnostykaItemsAdministrationService.Application.Operations.Items.Queries.GetPaginatedItemsById;
-public class GetPaginatedItemsByIdQuery : IRequest<PagedModel<ItemDto>>
+
+public class GetPaginatedItemsQuery : IRequest<PagedModel<ItemDto>>
 {
     public int Page { get; set; }
     public int PageSize { get; set; }
 }
 
-public class GetPaginatedItemsByIdQueryHandler : IRequestHandler<GetPaginatedItemsByIdQuery, PagedModel<ItemDto>>
+public class GetPaginatedItemsQueryHandler : IRequestHandler<GetPaginatedItemsQuery, PagedModel<ItemDto>>
 {
     private readonly AppDbContext _appDbContext;
 
-    public GetPaginatedItemsByIdQueryHandler(AppDbContext appDbContext)
+    public GetPaginatedItemsQueryHandler(AppDbContext appDbContext)
     {
         _appDbContext = appDbContext;
     }
-    public async Task<PagedModel<ItemDto>> Handle(GetPaginatedItemsByIdQuery request, CancellationToken cancellationToken)
+
+    public async Task<PagedModel<ItemDto>> Handle(GetPaginatedItemsQuery request, CancellationToken cancellationToken)
     {
-        var paginatedItemsEntities = await _appDbContext.Items.Include(i=>i.Color).AsNoTracking().PaginateAsync(request.Page, request.PageSize,cancellationToken);
+        var paginatedItemsEntities = await _appDbContext.Items.Include(i => i.Color).AsNoTracking().PaginateAsync(request.Page, request.PageSize, cancellationToken);
 
         return new PagedModel<ItemDto>()
         {
@@ -36,7 +32,7 @@ public class GetPaginatedItemsByIdQueryHandler : IRequestHandler<GetPaginatedIte
             TotalItems = paginatedItemsEntities.TotalItems,
             TotalPages = paginatedItemsEntities.TotalPages,
             Data = paginatedItemsEntities.Data.Select(e => new ItemDto()
-            { 
+            {
                 Id = e.Id,
                 Code = e.Code,
                 Name = e.Name,
