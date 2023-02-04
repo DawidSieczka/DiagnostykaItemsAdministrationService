@@ -1,19 +1,13 @@
 ﻿using DiagnostykaItemsAdministrationService.Application.Common.Exceptions;
-using DiagnostykaItemsAdministrationService.Application.Operations.Items.Commands.DeleteItem;
 using DiagnostykaItemsAdministrationService.Application.Operations.Items.Queries.GetItemById;
 using DiagnostykaItemsAdministrationService.Domain.Entities;
 using FluentAssertions;
-using Microsoft.EntityFrameworkCore;
 using Moq;
 using NUnit.Framework;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace DiagnostykaItemsAdministrationService.IntegrationTests.Items.Queries;
-public  class GetItemByIdQueryTests : TestBase
+
+public class GetItemByIdQueryTests : TestBase
 {
     [Test]
     public async Task GetItemByIdQuery_WithExistingItem_ShouldReturnItemSucessfuly()
@@ -37,14 +31,14 @@ public  class GetItemByIdQueryTests : TestBase
         await _dbContext.Items.AddAsync(item);
         await _dbContext.SaveChangesAsync();
 
-        var command = new GetItemByIdQuery()
+        var query = new GetItemByIdQuery()
         {
             Id = item.Id
         };
 
         //act
         var handler = new GetItemByIdQueryHandler(_dbContext);
-        var result = await handler.Handle(command, CancellationToken.None);
+        var result = await handler.Handle(query, CancellationToken.None);
 
         //assert
         result.Should().NotBeNull();
@@ -102,7 +96,7 @@ public  class GetItemByIdQueryTests : TestBase
     public async Task GetItemByIdQuery_WithNotExistingItem_ShouldThrowNotFoundException()
     {
         //arrange
-        
+
         var command = new GetItemByIdQuery()
         {
             Id = It.IsAny<int>()
