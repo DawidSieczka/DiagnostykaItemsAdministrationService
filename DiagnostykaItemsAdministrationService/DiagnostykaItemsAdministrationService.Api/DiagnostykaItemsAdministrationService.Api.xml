@@ -72,12 +72,15 @@
             Controller for items.
             </summary>
         </member>
-        <member name="M:DiagnostykaItemsAdministrationService.Api.Controllers.ItemsController.GetPaginatedItemsAsync(System.Int32,System.Int32)">
+        <member name="M:DiagnostykaItemsAdministrationService.Api.Controllers.ItemsController.GetPaginatedItemsAsync(System.Int32,System.Int32,System.String,System.String,System.Boolean)">
             <summary>
             Gets paginated items.
             </summary>
             <param name="currentPage">Current page number.</param>
             <param name="pageSize">Items amount in page.</param>
+            <param name="sortingProperty">Optional sorting property. E.g values: "Id", "Name", "Code".</param>
+            <param name="sortDescending">Should sorting in DESC.</param>
+            <param name="filterBy">Filtering input.</param>
             <returns>Paginated items.</returns>
         </member>
         <member name="M:DiagnostykaItemsAdministrationService.Api.Controllers.ItemsController.GetItemByIdAsync(System.Int32)">

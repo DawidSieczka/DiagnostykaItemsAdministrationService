@@ -21,15 +21,22 @@ public class ItemsController : ApiBase
     /// </summary>
     /// <param name="currentPage">Current page number.</param>
     /// <param name="pageSize">Items amount in page.</param>
+    /// <param name="sortingProperty">Optional sorting property. E.g values: "Id", "Name", "Code".</param>
+    /// <param name="sortDescending">Should sorting in DESC.</param>
+    /// <param name="filterBy">Filtering input.</param>
     /// <returns>Paginated items.</returns>
     [SwaggerResponse(StatusCodes.Status200OK, "Returns paginated items.", typeof(PagedModel<ItemDto>))]
+    [SwaggerResponse(StatusCodes.Status400BadRequest, "Invalid property input.", typeof(BaseExceptionModel))]
     [HttpGet]
-    public async Task<IActionResult> GetPaginatedItemsAsync(int currentPage = 1, int pageSize = 10)
+    public async Task<IActionResult> GetPaginatedItemsAsync(int currentPage = 1, int pageSize = 10, string? filterBy = "", string? sortingProperty = "", bool sortDescending = false)
     {
         var paginatedItems = await Sender.Send(new GetPaginatedItemsQuery()
         {
             Page = currentPage,
-            PageSize = pageSize
+            PageSize = pageSize,
+            SortingProperty = sortingProperty,
+            SortDescending = sortDescending,
+            FilterBy = filterBy
         });
 
         return Ok(paginatedItems);

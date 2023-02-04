@@ -13,6 +13,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 using Swashbuckle.AspNetCore.Filters;
 using System.Reflection;
+using System.Text.Json.Serialization;
 
 namespace DiagnostykaItemsAdministrationService.Api;
 
@@ -60,8 +61,11 @@ public class Startup
         services.AddSwaggerExamples();
 
         services.AddControllers(options =>
-                options.Filters.Add(new HttpResponseExceptionFilter(_env))
-            ).AddFluentValidation(fv => fv.RegisterValidatorsFromAssemblyContaining<CreateItemCommandValidator>());
+                    options.Filters.Add(new HttpResponseExceptionFilter(_env)))
+                .AddJsonOptions(options =>
+                {
+                    options.JsonSerializerOptions.DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull;
+                }).AddFluentValidation(fv => fv.RegisterValidatorsFromAssemblyContaining<CreateItemCommandValidator>());
 
         services.AddRouting(options => options.LowercaseUrls = true);
 

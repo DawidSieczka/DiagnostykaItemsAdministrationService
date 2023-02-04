@@ -50,7 +50,10 @@ public class GetPaginatedItemsQueryTests : TestBase
         var query = new GetPaginatedItemsQuery()
         {
             Page = currentPage,
-            PageSize = pageSize
+            PageSize = pageSize,
+            FilterBy = "",
+            SortingProperty = "",
+            SortDescending = false
         };
 
         //Act
@@ -100,7 +103,10 @@ public class GetPaginatedItemsQueryTests : TestBase
         var query = new GetPaginatedItemsQuery()
         {
             Page = 1,
-            PageSize = 1
+            PageSize = 1,
+            FilterBy = "",
+            SortingProperty = "",
+            SortDescending = false
         };
 
         //Act
