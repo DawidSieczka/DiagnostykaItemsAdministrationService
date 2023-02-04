@@ -1,0 +1,26 @@
+version: '3.4'
+
+services:
+  diagnostykaitemsadministrationservice.api:
+    image: ${DOCKER_REGISTRY-}diagnostykaitemsadministrationserviceapi
+    build:
+      context: .
+      dockerfile: DiagnostykaItemsAdministrationService.Api/Dockerfile
+    environment:
+        ConnectionStrings__SqlServer: "Server=sqlserver; Initial Catalog=ItemAdministrationDB; User ID=SA; Password=Qwer!234;"
+
+  sqlserver:
+    container_name: sqlserver
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    restart: unless-stopped
+    ports:
+     - "1433:1433"
+    environment:
+     ACCEPT_EULA: "Y"
+     SA_PASSWORD: Qwer!234
+     MSSQL_PID: express 
+    volumes:
+      - DiagnostykaItemsAdministrationDbVolume:/var/opt/mssql
+  
+volumes:
+  DiagnostykaItemsAdministrationDbVolume:

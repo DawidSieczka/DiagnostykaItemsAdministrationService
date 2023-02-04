@@ -15,7 +15,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{30DD752B
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DiagnostykaItemsAdministrationService.IntegrationTests", "DiagnostykaItemsAdministrationService.IntegrationTests\DiagnostykaItemsAdministrationService.IntegrationTests.csproj", "{CA6FAF09-688F-44E4-BA3D-BEFA585B1908}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DiagnostykaItemsAdministrationService.UnitTests", "DiagnostykaItemsAdministrationService.UnitTests\DiagnostykaItemsAdministrationService.UnitTests.csproj", "{333C6149-C794-481C-BDBA-A89887B295C7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DiagnostykaItemsAdministrationService.UnitTests", "DiagnostykaItemsAdministrationService.UnitTests\DiagnostykaItemsAdministrationService.UnitTests.csproj", "{333C6149-C794-481C-BDBA-A89887B295C7}"
+EndProject
+Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{CD3F41BA-55DD-4743-A2B4-21DAABC80791}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -47,6 +49,10 @@ Global
 		{333C6149-C794-481C-BDBA-A89887B295C7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{333C6149-C794-481C-BDBA-A89887B295C7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{333C6149-C794-481C-BDBA-A89887B295C7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CD3F41BA-55DD-4743-A2B4-21DAABC80791}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CD3F41BA-55DD-4743-A2B4-21DAABC80791}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CD3F41BA-55DD-4743-A2B4-21DAABC80791}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CD3F41BA-55DD-4743-A2B4-21DAABC80791}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
